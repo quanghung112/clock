@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<canvas id="Canvas" height="900" width="900" style="border: 3px solid red"></canvas>
+<div id="Hours"></div>
+<script>
+    function Hour(){
+        var d = new Date();
+        var t = d.toLocaleTimeString();
+        document.getElementById("Hours").innerHTML = t;
+        var Min = d.getMinutes();
+        var hour = d.getHours();
+        var second = d.getSeconds();
+        if (hour > 11) {
+            hour = hour - 12;
+        }
+        var radianHour = (hour / 6 + Min / 360) * Math.PI;
+        var radianMinu = 6 * Min * Math.PI / 180;
+        var radianSec = 6 * second * Math.PI / 180;
+        var drawHour = radianHour - Math.PI / 2;
+        var drawMin = radianMinu - Math.PI / 2;
+        var drawSec= radianSec - Math.PI / 2;
+        var ctx = document.getElementById('Canvas').getContext('2d');
+        ctx.clearRect(0,0,900,900);
+        ctx.beginPath();
+        ctx.font = '40px Arial';
+        ctx.fillText('XII', 375, 150);
+        ctx.fillText('III', 650, 410);
+        ctx.fillText('VI', 375, 675);
+        ctx.fillText('IX', 125, 410);
+        ctx.closePath();
+        ctx.beginPath();
+        ctx.arc(400, 400, 300, 0, 2 * Math.PI);
+        ctx.stroke();
+        ctx.closePath();
+        ctx.beginPath();
+        ctx.moveTo(400, 400);
+        ctx.arc(400, 400, 180, drawHour, drawHour);
+        ctx.strokeStyle = 'red';
+        ctx.stroke();
+        ctx.closePath();
+        ctx.beginPath();
+        ctx.moveTo(400, 400);
+        ctx.arc(400, 400, 250, drawMin, drawMin);
+        ctx.strokeStyle = 'green';
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(400, 400);
+        ctx.arc(400, 400, 250, drawSec, drawSec);
+        ctx.strokeStyle = 'black';
+        ctx.stroke();
+    }
+    setInterval(function () {
+        Hour();
+    },1000);
+    Hour();
+</script>
+</body>
+</html>
